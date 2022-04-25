@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/downloader_nav_graph"
+    app:startDestination="@id/listDownloadsFragment">
+
+    <fragment
+        android:id="@+id/listDownloadsFragment"
+        android:name="paolo.udacity.downloader.platform.view.list_downloadables.views.ListDownloadsFragment"
+        android:label="Downloads" >
+        <action
+            android:id="@+id/action_listDownloadsFragment_to_downloadedDetailFragment"
+            app:destination="@id/downloadedDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/downloadedDetailFragment"
+        android:name="paolo.udacity.downloader.platform.view.download_detail.views.DownloadedDetailFragment"
+        android:label="Download detail" />
+
+</navigation>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Button states -->
+    <string name="download_button_idle_text">Download</string>
+    <string name="download_button_downloading_text">Downloading …</string>
+    <string name="download_button_successful_text">Success!</string>
+    <string name="download_button_error_text">Error :(</string>
+
+    <!-- List downloads -->
+    <string name="cd_text_basic_download_image">Basic Download Image</string>
+    <string name="rd_text_glide">GLIDE - Image loading library</string>
+    <string name="rd_text_load_app">LoadApp - Current repository by Udacity</string>
+    <string name="rd_text_retrofit">Retrofit - Type-safe HTTP client for Android and Java by Square</string>
+    <string name="rd_text_other">Other - Write the http address in the edit below</string>
+
+    <string name="et_hint_other_url">Custom URL</string>
+    <string name="cd_download_button_view">A custom download control with effects</string>
+
+    <!-- Notifications -->
+    <string name="downloader_notification_channel_id">Downloader Notification Id</string>
+    <string name="downloader_notification_channel_name">Downloader Notification</string>
+    <string name="downloader_notification_channel_description">Download Result</string>
+
+    <!-- fragment_download_detail -->
+    <string name="text_file_name_descriptor">File name:</string>
+    <string name="text_download_result_descriptor">Status:</string>
+    <string name="button_text_dismiss_detail">OK</string>
+
+</resources>

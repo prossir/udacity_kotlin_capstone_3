@@ -14,3 +14,10 @@ dependencyResolutionManagement {
 }
 rootProject.name = "udacity_kotlin_capstone_3"
 include ':app'
+
+include ':libraries'
+include ':libraries:core'
+include ':libraries:components'
+
+include ':features'
+include ':features:downloader'

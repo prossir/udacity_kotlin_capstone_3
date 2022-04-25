@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+
+        <import type="paolo.udacity.downloader.platform.view.common.enums.DownloadEnum" />
+
+        <variable
+            name="viewModel"
+            type="paolo.udacity.downloader.platform.view.common.views.DownloaderViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_download"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:contentDescription="@string/cd_text_basic_download_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/rg_download_options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_download">
+
+            <RadioButton
+                android:id="@+id/rb_glide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="60dp"
+                android:onClick="@{_ -> viewModel.setDownloadObjective(DownloadEnum.GLIDE)}"
+                android:text="@string/rd_text_glide" />
+
+            <RadioButton
+                android:id="@+id/rb_load_app"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="60dp"
+                android:onClick="@{_ -> viewModel.setDownloadObjective(DownloadEnum.LOAD_APP)}"
+                android:text="@string/rd_text_load_app" />
+
+            <RadioButton
+                android:id="@+id/rb_retrofit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="60dp"
+                android:onClick="@{_ -> viewModel.setDownloadObjective(DownloadEnum.RETROFIT)}"
+                android:text="@string/rd_text_retrofit" />
+
+            <RadioButton
+                android:id="@+id/rb_other"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="60dp"
+                android:onClick="@{_ -> viewModel.setDownloadObjective(DownloadEnum.OTHER)}"
+                android:text="@string/rd_text_other" />
+
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/et_other_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:hint="@string/et_hint_other_url"
+            android:importantForAutofill="no"
+            android:inputType="textUri"
+            android:minHeight="60dp"
+            android:text="@={viewModel.manualUrlToDownload}"
+            android:visibility="@{viewModel.isOtherUrlSelected ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@+id/rg_download_options" />
+
+        <paolo.udacity.downloader.platform.custom_views.DownloadButtonView
+            android:id="@+id/b_download"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="12dp"
+            android:contentDescription="@string/cd_download_button_view"
+            android:onClick="@{_ -> viewModel.tryDownload(context)}"
+            app:downloadProgress="@{viewModel.downloadProgress}"
+            app:downloadResult="@{viewModel.downloadResult}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_other_url"
+            app:ready="@{viewModel.readyForDownload}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

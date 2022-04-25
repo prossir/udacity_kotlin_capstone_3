@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="paolo.udacity.downloader.platform.view.common.views.DownloaderViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="12dp">
+
+        <!-- File name -->
+        <TextView
+            android:id="@+id/tv_file_name_descriptor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/text_file_name_descriptor"
+            app:layout_constraintEnd_toStartOf="@+id/tv_file_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_file_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.downloadName}"
+            tools:text="GLIDE - Image loading library Lorem Ipsum"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_file_name_descriptor"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Download status -->
+        <TextView
+            android:id="@+id/tv_download_result_descriptor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/text_download_result_descriptor"
+            app:layout_constraintEnd_toStartOf="@+id/tv_download_result"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_file_name" />
+
+        <TextView
+            android:id="@+id/tv_download_result"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.downloadResultDescription}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_download_result_descriptor"
+            app:layout_constraintTop_toBottomOf="@+id/tv_file_name"
+            tools:text="Success" />
+
+        <!-- Dismiss action -->
+        <Button
+            android:id="@+id/b_dismiss_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:onClick="@{_ -> viewModel.dismissDownloadDetail()}"
+            android:text="@string/button_text_dismiss_detail"
+            app:layout_constraintTop_toBottomOf="@+id/tv_download_result" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

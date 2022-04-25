@@ -1,8 +1,8 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs'
     id 'dagger.hilt.android.plugin'
 }
 
@@ -10,13 +10,11 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "paolo.udacity.udacity_kotlin_capstone_3"
         minSdk 24
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
-        multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -39,23 +37,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
-    buildFeatures {
-        viewBinding true
-        dataBinding true
-    }
-}
-
-/* This makes it so Hilt will recognize modules with Hilt */
-hilt {
-    enableExperimentalClasspathAggregation = true
 }
 
 dependencies {
     implementation project(':libraries:core')
-    implementation project(':features:downloader')
 
     api 'com.google.dagger:hilt-android:2.41'
     kapt 'com.google.dagger:hilt-compiler:2.41'
 }
-

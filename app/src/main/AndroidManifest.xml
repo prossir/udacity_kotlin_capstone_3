@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="paolo.udacity.udacity_kotlin_capstone_3">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="paolo.udacity.udacity_kotlin_capstone_3"
+    tools:node="merge">
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Udacity_kotlin_capstone_3">
+        android:theme="@style/Theme.Udacity_kotlin_capstone_3"
+        tools:node="merge">
+
+        <!-- Entry point applications must be declared in the @HiltApp scope if not they are
+        not recognized on the merging phase of the manifest -->
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name="paolo.udacity.downloader.platform.view.common.views.DownloaderActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Udacity_kotlin_capstone_3.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
