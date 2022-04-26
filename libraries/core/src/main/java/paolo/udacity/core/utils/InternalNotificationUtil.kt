@@ -34,13 +34,6 @@ object InternalNotificationUtil {
         }
     }
 
-    fun sendNotification(activity: Activity, notificationInfo: NotificationInfo) {
-        val notificationManager = ContextCompat.getSystemService(activity,
-            NotificationManager::class.java) as NotificationManager
-        val pendingNotificationInfo = PendingNotificationInfo(activity)
-        notificationManager.sendNotification(pendingNotificationInfo, notificationInfo)//DownloaderNotificationInfoEnum.DEFAULT.notificationInfo)
-    }
-
     fun sendNotification(activity: Activity, navigationGraphId: Int,
                          destinationId: Int, bundle: Bundle?, notificationInfo: NotificationInfo) {
         val notificationManager = ContextCompat.getSystemService(activity,
@@ -48,5 +41,12 @@ object InternalNotificationUtil {
         val pendingNotificationInfo = PendingNotificationInfo(activity, navigationGraphId, destinationId, bundle)
         notificationManager.sendNotification(pendingNotificationInfo, notificationInfo)
     }
+
+    /*fun sendNotification(activity: Activity, notificationInfo: NotificationInfo) {
+        val notificationManager = ContextCompat.getSystemService(activity,
+        NotificationManager::class.java) as NotificationManager
+        val pendingNotificationInfo = PendingNotificationInfo(activity)
+        notificationManager.sendNotification(pendingNotificationInfo, notificationInfo)
+    } */
 
 }

@@ -11,8 +11,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="12dp">
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        app:layoutDescription="@xml/scene_leave_detail"
+        tools:context=".platform.view.common.views.DownloaderActivity">
 
         <!-- File name -->
         <TextView
@@ -60,7 +62,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:onClick="@{_ -> viewModel.dismissDownloadDetail()}"
             android:text="@string/button_text_dismiss_detail"
             app:layout_constraintTop_toBottomOf="@+id/tv_download_result" />
 

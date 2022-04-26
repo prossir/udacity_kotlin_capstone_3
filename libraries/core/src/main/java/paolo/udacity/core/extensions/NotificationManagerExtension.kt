@@ -26,7 +26,6 @@ fun NotificationManager.sendNotification(pendingNotificationInfo: PendingNotific
             .setDestination(pendingNotificationInfo.destination!!)
             .setArguments(pendingNotificationInfo.arguments)
             .createPendingIntent()
-
     } else {
         val contentIntent = Intent(pendingNotificationInfo.context,
             pendingNotificationInfo.objectiveActivity::class.java)
@@ -42,9 +41,6 @@ fun NotificationManager.sendNotification(pendingNotificationInfo: PendingNotific
         pendingNotificationInfo.context.resources,
         notificationInfo.icon
     )
-    val bigPicStyle = NotificationCompat.BigPictureStyle()
-        .bigPicture(iconAsBitmap)
-        .bigLargeIcon(null)
 
     // Build the notification
     val builder = NotificationCompat.Builder(
@@ -58,7 +54,6 @@ fun NotificationManager.sendNotification(pendingNotificationInfo: PendingNotific
         //Also set setAutoCancel() to true, so that when the user taps on the notification,
         // the notification dismisses itself as it takes you to the app.
         .setAutoCancel(true)
-        .setStyle(bigPicStyle)
         .setLargeIcon(iconAsBitmap)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
     notify(NOTIFICATION_ID, builder.build())
