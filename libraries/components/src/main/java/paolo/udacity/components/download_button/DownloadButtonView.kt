@@ -1,4 +1,4 @@
-package paolo.udacity.downloader.platform.custom_views
+package paolo.udacity.components.download_button
 
 import android.content.Context
 import android.graphics.*
@@ -8,9 +8,9 @@ import androidx.annotation.StringRes
 import androidx.core.content.withStyledAttributes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.findViewTreeLifecycleOwner
+import paolo.udacity.components.R
 import paolo.udacity.core.extensions.darken
 import paolo.udacity.core.extensions.dp
-import paolo.udacity.downloader.R
 
 
 class DownloadButtonView @JvmOverloads constructor(context: Context,
@@ -24,7 +24,7 @@ class DownloadButtonView @JvmOverloads constructor(context: Context,
 
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         textAlign = Paint.Align.CENTER
-        textSize = 55.0f
+        textSize = 56.0f
         typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD)
     }
 
@@ -40,7 +40,7 @@ class DownloadButtonView @JvmOverloads constructor(context: Context,
     var isReady: Boolean = false
 
     // View State
-    private var downloadState = DownloadButtonState.IDLE
+    private lateinit var downloadState: DownloadButtonState
 
     init {
         isClickable = true
@@ -105,7 +105,7 @@ class DownloadButtonView @JvmOverloads constructor(context: Context,
     private fun drawBaseRectangle(canvas: Canvas) {
         val innerPadding = 2f
         val x1 = innerPadding * 1f
-        val x2 = (width - innerPadding * 2) + innerPadding
+        val x2 = (width - innerPadding * 2f) + innerPadding
         val y1 = height * 1f
         val y2 = 0f
         canvas.clipRect(x1, y1, x2, y2)
@@ -114,7 +114,7 @@ class DownloadButtonView @JvmOverloads constructor(context: Context,
 
     private fun drawText(@StringRes text: Int, canvas: Canvas) {
         val x = width / 2f // Text padding
-        val y = height / 2 - (textPaint.descent() + textPaint.ascent())/ 2
+        val y = height / 2f - (textPaint.descent() + textPaint.ascent())/ 2
         canvas.drawText(context.getString(text), x, y, textPaint)
     }
 

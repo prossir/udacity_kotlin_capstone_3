@@ -1,9 +1,9 @@
-package paolo.udacity.downloader.platform.custom_views
+package paolo.udacity.components.download_button
 
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import paolo.udacity.core.R as colorOrigin
-import paolo.udacity.downloader.R as stringOrigin
+import paolo.udacity.components.R as stringOrigin
 
 
 enum class DownloadButtonState(@ColorInt var buttonColor: Int,

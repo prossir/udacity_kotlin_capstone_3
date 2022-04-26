@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Button states -->
-    <string name="download_button_idle_text">Download</string>
-    <string name="download_button_downloading_text">Downloading …</string>
-    <string name="download_button_successful_text">Success!</string>
-    <string name="download_button_error_text">Error :(</string>
-
     <!-- List downloads -->
     <string name="cd_text_basic_download_image">Basic Download Image</string>
     <string name="rd_text_glide">GLIDE - Image loading library</string>

@@ -50,6 +50,10 @@ class ListDownloadsFragment : Fragment() {
                 )
             }
         }
+
+        viewModel.otherUrlToDownload.observe(viewLifecycleOwner) {
+            viewModel.checkOtherUrlValidity(it)
+        }
     }
 
     private fun initUi() {

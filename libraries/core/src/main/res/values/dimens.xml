@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Margins -->
+    <dimen name="d_m_25">200dp</dimen>
     <dimen name="d_m_8">64dp</dimen>
     <dimen name="d_m_7">56dp</dimen>
     <dimen name="d_m_6">48dp</dimen>

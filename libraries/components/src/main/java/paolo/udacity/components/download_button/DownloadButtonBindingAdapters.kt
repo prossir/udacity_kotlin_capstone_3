@@ -1,4 +1,4 @@
-package paolo.udacity.downloader.platform.custom_views
+package paolo.udacity.components.download_button
 
 import androidx.databinding.BindingAdapter
 import paolo.udacity.core.dto.Event

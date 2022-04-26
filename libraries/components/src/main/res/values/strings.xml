@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Button states -->
+    <string name="download_button_idle_text">Download</string>
+    <string name="download_button_downloading_text">Downloading …</string>
+    <string name="download_button_successful_text">Success!</string>
+    <string name="download_button_error_text">Error :(</string>
+
+</resources>

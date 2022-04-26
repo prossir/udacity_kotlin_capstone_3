@@ -16,12 +16,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import paolo.udacity.core.extensions.intValueOfColumn
-import paolo.udacity.core.extensions.isSuccessful
-import paolo.udacity.core.extensions.isSuccessfulOrHasFailed
 import paolo.udacity.core.dto.Event
-import paolo.udacity.core.extensions.safeLaunch
-import paolo.udacity.core.extensions.with
+import paolo.udacity.core.extensions.*
 import paolo.udacity.downloader.R
 import paolo.udacity.downloader.platform.view.common.enums.DownloadEnum
 import paolo.udacity.downloader.platform.view.common.utils.DownloaderConstants
@@ -37,43 +33,73 @@ class DownloaderViewModel(
 
     @Inject constructor(): this(Dispatchers.IO)
 
+    /**
+     * @property _actionState, observable property  to display the errors during the download
+     * process. */
     private val _actionState = MutableLiveData<DownloaderActionState>()
     val actionState: MutableLiveData<DownloaderActionState>
         get() = _actionState
 
+    /**
+     * @property _navigateToListDownloads, observable property for navigation back from the detail
+     * fragment to the list fragment. Can only happen once. */
     private val _navigateToListDownloads = MutableLiveData<Event<String>>()
     val navigateToListDownloads : LiveData<Event<String>>
         get() = _navigateToListDownloads
 
+    // Url written by the user
     /**
-     * Used only when the user wants to manually write the address to download what they want
-     * @property _isOtherUrlSelected the other url option is selected and is checked in the
-     * internal functions of the viewModel.
-     */
-    private var _isOtherUrlSelected: MutableLiveData<Boolean> = MutableLiveData(false)
+     * Used only when the user wants to manually write the url to download
+     * @property _isOtherUrlSelected, the other url option is selected and is checked in the
+     * internal functions of the viewModel. */
+    private val _isOtherUrlSelected: MutableLiveData<Boolean> = MutableLiveData(false)
     val isOtherUrlSelected: LiveData<Boolean>
         get() = _isOtherUrlSelected
-
-    private var _manualUrlToDownload: MutableLiveData<String> = MutableLiveData("")
-    var manualUrlToDownload: MutableLiveData<String>
-        get() = _manualUrlToDownload
-        set(value) { _manualUrlToDownload.value = value.toString() }
-
     /**
-     * Used only when the user wants to manually write the address to download what they want
+     * Used only when the user wants to manually write the url to download
+     * @property _otherUrlToDownload, the custom URL that needs to be checked before
+     * being downloaded. */
+    private val _otherUrlToDownload: MutableLiveData<String> = MutableLiveData("")
+    var otherUrlToDownload: MutableLiveData<String>
+        get() = _otherUrlToDownload
+        set(value) { _otherUrlToDownload.value = value.toString() }
+     /**
+      * @property otherUrlError
      */
+    val otherUrlError: MutableLiveData<String?> = MutableLiveData()
+
+
+    // Common variables
+    /**
+     * @property downloadObjective, the objective URL to be download. 3 fixed in an enum and 1
+     * mutable. */
     private var downloadObjective: DownloadEnum? = null
+    /**
+     * @property readyForDownload, flag that checks whether a [downloadObjective] has been chosen
+     * to be downloaded. Allows the animations on the download button to continue. */
     val readyForDownload: MutableLiveData<Boolean> = MutableLiveData(false)
-    val downloadName : String
+    /**
+     * @property downloadObjectiveName, accesor that gives the returns the name of the
+     * [downloadObjective] if one has been chosen. Else it returns Uknown as a name. */
+    val downloadObjectiveName : String
         get() = downloadObjective?.name ?: "Unknown"
 
     /**
-     * Determines the  progress of the download live
-     */
+     * @property downloadProgress, Determines the  progress of the download as it happens or an
+     * approximated download rate if the download size is too small and does not update correctly. */
     val downloadProgress: MutableLiveData<Double> = MutableLiveData()
+    /**
+     * @property downloadResult, holds the result of the download downloaded by the DownloadManager
+     * as a single use event. If true the [downloadObjective] was successfully downloaded;
+     * if false it failed to download the [downloadObjective]. */
     val downloadResult: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    /**
+     * @property downloadResultDescription, the download result description for the detailed
+     * result. */
     val downloadResultDescription: String
         get() = if(downloadResult.value?.peekContent() == true) "Success" else "Failed"
+    /**
+     * @property downloadResultBundle, the download result */
     val downloadResultBundle: Bundle
         get() {
             return Bundle().apply {
@@ -86,24 +112,29 @@ class DownloaderViewModel(
 
     /**
      * As the DownloadManager does not always know the COLUMN_TOTAL_SIZE_BYTES due to it being
-     * too small we add a small corrective projection related to an overall progress
-     * */
-    private var smallDownloadCorrection = 0.0
+     * too small we add a small corrective projection related to an overall progress */
+    private var smallDownloadProgressCorrection = 0.0
 
     /**
      * Sets a download objective for the DownloadManager to download. If a custom download objective
      * is set, then it allows the user to set the url to download the information from.
      * @param downloadObjective an enumeration that restricts the type of element that can be
-     * downloaded
-     */
+     * downloaded. */
     fun setDownloadObjective(downloadObjective: DownloadEnum) {
-        _isOtherUrlSelected.value = downloadObjective == DownloadEnum.OTHER
+        if(downloadObjective == DownloadEnum.OTHER) {
+            _isOtherUrlSelected.value = true
+            readyForDownload.postValue(false)
+        }
+        else {
+            _isOtherUrlSelected.value = false
+            readyForDownload.postValue(true)
+        }
         this.downloadObjective = downloadObjective
-        readyForDownload.postValue(true)
     }
 
     /**
-     * @param context: A context to use the download manager and access strings in the xml file
+     * It checks
+     * @param context: A context to use for downloading.
      */
     fun tryDownload(context: Context) {
         checkBeforeDownload()?.let { errors ->
@@ -126,11 +157,22 @@ class DownloaderViewModel(
         }
 
         if(downloadObjective == DownloadEnum.OTHER) {
-            if(_manualUrlToDownload.value.isNullOrBlank()) {
+            if(_otherUrlToDownload.value.isNullOrBlank()) {
                 return "When selecting others option, you must specify an url."
             }
         }
         return null
+    }
+
+    fun checkOtherUrlValidity(urlStringCandidate: String) {
+        if(urlStringCandidate.isValidUrl) {
+            downloadObjective?.setUrl(urlStringCandidate)
+            otherUrlError.postValue(null)
+            readyForDownload.postValue(true)
+        }
+        else {
+            otherUrlError.postValue("Invalid URL")
+        }
     }
 
     /**
@@ -170,11 +212,11 @@ class DownloaderViewModel(
                 cursor.isSuccessfulOrHasFailed() -> {
                     isDownloading.set(false)
                     emit(100.0)
-                    smallDownloadCorrection = 0.0
+                    smallDownloadProgressCorrection = 0.0
                     downloadResult.postValue(Event(cursor.isSuccessful()))
                 }
                 else -> {
-                    smallDownloadCorrection += 0.5
+                    smallDownloadProgressCorrection += 0.5
                     emit(calculateDownloadProgressAsPercentage(bytesDownloaded, bytesTotal))
                 }
             }
@@ -186,7 +228,7 @@ class DownloaderViewModel(
 
     private fun calculateDownloadProgressAsPercentage(bytesDownloaded: Int, bytesTotal: Int) : Double {
         return if(bytesTotal <= 0) {
-            if(smallDownloadCorrection >= 100.0) 98.0 else smallDownloadCorrection
+            if(smallDownloadProgressCorrection >= 100.0) 98.0 else smallDownloadProgressCorrection
         } else {
             (bytesDownloaded * 1.0)/bytesTotal
         }
