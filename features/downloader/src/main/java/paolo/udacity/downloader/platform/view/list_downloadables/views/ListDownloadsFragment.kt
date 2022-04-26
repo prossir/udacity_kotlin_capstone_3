@@ -41,12 +41,14 @@ class ListDownloadsFragment : Fragment() {
         }
 
         viewModel.downloadResult.observe(viewLifecycleOwner) {
-            InternalNotificationUtil.sendNotification(activity = requireActivity(),
-                navigationGraphId = R.navigation.downloader_nav_graph,
-                destinationId = R.id.downloadedDetailFragment,
-                bundle = null,
-                notificationInfo = DownloaderNotificationInfoEnum.DEFAULT.notificationInfo
-            )
+            it.getContentIfNotHandled()?.let {
+                InternalNotificationUtil.sendNotification(activity = requireActivity(),
+                    navigationGraphId = R.navigation.downloader_nav_graph,
+                    destinationId = R.id.downloadedDetailFragment,
+                    bundle = viewModel.downloadResultBundle,
+                    notificationInfo = DownloaderNotificationInfoEnum.DEFAULT.notificationInfo
+                )
+            }
         }
     }
 

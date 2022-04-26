@@ -27,4 +27,7 @@
     <string name="text_download_result_descriptor">Status:</string>
     <string name="button_text_dismiss_detail">OK</string>
 
+    <!-- Download Manager Configuration -->
+    <string name="download_manager_app_description">Download files from Internet</string>
+
 </resources>

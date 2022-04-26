@@ -3,6 +3,7 @@ package paolo.udacity.downloader.platform.view.common.views
 import android.app.DownloadManager
 import android.content.Context
 import android.net.Uri
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,14 +16,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import paolo.udacity.core.R
 import paolo.udacity.core.extensions.intValueOfColumn
 import paolo.udacity.core.extensions.isSuccessful
 import paolo.udacity.core.extensions.isSuccessfulOrHasFailed
 import paolo.udacity.core.dto.Event
 import paolo.udacity.core.extensions.safeLaunch
 import paolo.udacity.core.extensions.with
+import paolo.udacity.downloader.R
 import paolo.udacity.downloader.platform.view.common.enums.DownloadEnum
+import paolo.udacity.downloader.platform.view.common.utils.DownloaderConstants
 import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
@@ -70,8 +72,18 @@ class DownloaderViewModel(
      */
     val downloadProgress: MutableLiveData<Double> = MutableLiveData()
     val downloadResult: MutableLiveData<Event<Boolean>> = MutableLiveData()
-    val downloadResultDescription : String
+    val downloadResultDescription: String
         get() = if(downloadResult.value?.peekContent() == true) "Success" else "Failed"
+    val downloadResultBundle: Bundle
+        get() {
+            return Bundle().apply {
+                this.putBoolean(DownloaderConstants.DOWNLOADER_ARGUMENT_DOWNLOAD_RESULT,
+                    downloadResult.value?.peekContent() == true)
+                this.putSerializable(DownloaderConstants.DOWNLOADER_ARGUMENT_DOWNLOAD_OBJECTIVE,
+                    downloadObjective!!)
+            }
+        }
+
     /**
      * As the DownloadManager does not always know the COLUMN_TOTAL_SIZE_BYTES due to it being
      * too small we add a small corrective projection related to an overall progress
@@ -129,8 +141,8 @@ class DownloaderViewModel(
             with(dispatcher) {
                 val request =
                     DownloadManager.Request(Uri.parse(downloadObjective!!.getUrl()))
-                        .setTitle(context.getString(R.string.app_name))
-                        .setDescription(context.getString(R.string.app_description))
+                        .setTitle(context.getString(paolo.udacity.core.R.string.app_name))
+                        .setDescription(context.getString(R.string.download_manager_app_description))
                         .setRequiresCharging(false)
                         .setAllowedOverMetered(true)
                         .setAllowedOverRoaming(true)

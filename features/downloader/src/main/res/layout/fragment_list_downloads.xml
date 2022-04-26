@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="android.view.View" />
@@ -25,7 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/teal_700" />
+            app:tint="@color/colorPrimary" />
 
         <RadioGroup
             android:id="@+id/rg_download_options"
@@ -89,8 +90,8 @@
         <paolo.udacity.downloader.platform.custom_views.DownloadButtonView
             android:id="@+id/b_download"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="12dp"
+            android:layout_height="@dimen/d_m_8"
+            android:layout_margin="@dimen/d_p_1.5"
             android:contentDescription="@string/cd_download_button_view"
             android:onClick="@{_ -> viewModel.tryDownload(context)}"
             app:downloadProgress="@{viewModel.downloadProgress}"
@@ -99,7 +100,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_other_url"
-            app:ready="@{viewModel.readyForDownload}" />
+            app:ready="@{viewModel.readyForDownload}"
+            custom:buttonColorDownloading="?attr/colorSecondary"
+            custom:buttonColorIdle="?attr/colorPrimary"
+            custom:textColorDownloading="?attr/colorOnSecondary"
+            custom:textColorIdle="?attr/colorOnPrimary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

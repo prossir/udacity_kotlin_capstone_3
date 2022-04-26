@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Margins -->
+    <dimen name="d_m_8">64dp</dimen>
+    <dimen name="d_m_7">56dp</dimen>
+    <dimen name="d_m_6">48dp</dimen>
+    <dimen name="d_m_5">40dp</dimen>
+    <dimen name="d_m_4">32dp</dimen>
+    <dimen name="d_m_3">24dp</dimen>
+    <dimen name="d_m_2">16dp</dimen>
+    <dimen name="d_m_1.5">12dp</dimen>
+    <dimen name="d_m_1">8dp</dimen>
+
+    <dimen name="d_dynamic">0dp</dimen>
+
+    <!-- Paddings -->
+    <dimen name="d_p_1.5">12dp</dimen>
+
+</resources>

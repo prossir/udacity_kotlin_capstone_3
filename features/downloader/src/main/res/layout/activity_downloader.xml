@@ -6,7 +6,7 @@
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/teal_700"
+        android:background="?attr/colorPrimary"
         app:layoutDescription="@xml/scene_leave_detail"
         tools:context=".platform.view.common.views.DownloaderActivity">
 

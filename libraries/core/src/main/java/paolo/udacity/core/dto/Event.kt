@@ -1,9 +1,9 @@
 package paolo.udacity.core.dto
 
 
-open class Event<out T>(private val content: T) {
+open class Event<out T>(private val content: T, handledState: Boolean = false) {
 
-    var hasBeenHandled = false
+    var hasBeenHandled = handledState
         private set // Allow external read but not write
 
     /**

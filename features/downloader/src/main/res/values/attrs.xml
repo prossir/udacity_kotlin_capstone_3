@@ -2,13 +2,11 @@
 <resources>
     <declare-styleable name="DownloadButtonView">
         <!-- Idle states -->
-        <attr name="buttonColorIdle" format="color" />
-        <attr name="textColorIdle" format="color" />
-        <attr name="buttonTextIdle" format="string" />
+        <attr name="buttonColorIdle" format="reference|color" />
+        <attr name="textColorIdle" format="reference|color" />
 
         <!-- Downloading states -->
-        <attr name="buttonColorDownloading" format="color" />
-        <attr name="textColorDownloading" format="color" />
-        <attr name="buttonTextDownloading" format="string" />
+        <attr name="buttonColorDownloading" format="reference|color" />
+        <attr name="textColorDownloading" format="reference|color" />
     </declare-styleable>
 </resources>

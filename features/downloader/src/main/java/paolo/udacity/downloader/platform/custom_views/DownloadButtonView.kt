@@ -52,16 +52,14 @@ class DownloadButtonView @JvmOverloads constructor(context: Context,
                 DownloadButtonState.IDLE.textColor)
             DownloadButtonState.IDLE.buttonColor = getColor(R.styleable.DownloadButtonView_buttonColorIdle,
                 DownloadButtonState.IDLE.buttonColor)
-            DownloadButtonState.IDLE.buttonText = getColor(R.styleable.DownloadButtonView_buttonColorIdle,
-                DownloadButtonState.IDLE.buttonText)
 
             // Downloading variables
-            DownloadButtonState.DOWNLOADING.textColor = getColor(R.styleable.DownloadButtonView_textColorIdle,
+            DownloadButtonState.DOWNLOADING.textColor = getColor(R.styleable.DownloadButtonView_textColorDownloading,
                 DownloadButtonState.DOWNLOADING.textColor)
-            DownloadButtonState.DOWNLOADING.buttonColor = getColor(R.styleable.DownloadButtonView_buttonColorIdle,
+            DownloadButtonState.DOWNLOADING.buttonColor = getColor(R.styleable.DownloadButtonView_buttonColorDownloading,
                 DownloadButtonState.DOWNLOADING.buttonColor)
-            DownloadButtonState.DOWNLOADING.buttonText = getColor(R.styleable.DownloadButtonView_buttonColorIdle,
-                DownloadButtonState.DOWNLOADING.buttonText)
+
+            downloadState = DownloadButtonState.IDLE
         }
     }
 
@@ -153,13 +151,6 @@ class DownloadButtonView @JvmOverloads constructor(context: Context,
         circlePaint.color = Color.parseColor(CIRCLE_COLOR)
         canvas.drawArc(loadingCircle, 0f, (360 * (progress / 100)).toFloat(), true, circlePaint)
     }
-
-    /*fun hasCompletedDownload() {
-        // cancel the animation when file is downloaded
-        valueAnimator.cancel()
-        //buttonState = ButtonState.Completed
-        invalidate()
-    } */
 
     companion object {
         // circle related constants

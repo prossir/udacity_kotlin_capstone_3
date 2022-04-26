@@ -16,6 +16,13 @@
     <fragment
         android:id="@+id/downloadedDetailFragment"
         android:name="paolo.udacity.downloader.platform.view.download_detail.views.DownloadedDetailFragment"
-        android:label="Download detail" />
+        android:label="Download detail" >
+        <argument
+            android:name="downloadObjective"
+            app:argType="paolo.udacity.downloader.platform.view.common.enums.DownloadEnum" />
+        <argument
+            android:name="downloadResult"
+            app:argType="boolean" />
+    </fragment>
 
 </navigation>

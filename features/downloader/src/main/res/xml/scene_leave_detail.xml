@@ -36,7 +36,7 @@
             motion:layout_constraintTop_toTopOf="parent">
             <CustomAttribute
                 motion:attributeName="BackgroundColor"
-                motion:customColorValue="@color/teal_700" />
+                motion:customColorValue="?attr/colorPrimary" />
         </Constraint>
     </ConstraintSet>
 
